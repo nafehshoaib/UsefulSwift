@@ -55,7 +55,7 @@ struct ViewIf_Previews: PreviewProvider {
                 Text("If")
                     .if(toggle) {
                         $0.bold()
-                }
+                    }
                 Text("If + Else")
                     .if(toggle) {
                         $0.foregroundColor(.blue)
@@ -77,8 +77,6 @@ struct ViewIf_Previews: PreviewProvider {
                         text
                             .bold()
                     }
-
-
             }
         }
     }
