@@ -8,7 +8,7 @@
 import Foundation
 
 extension Sequence {
-    func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>) -> [Element] {
+    public func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>) -> [Element] {
         return sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
     }
 }
