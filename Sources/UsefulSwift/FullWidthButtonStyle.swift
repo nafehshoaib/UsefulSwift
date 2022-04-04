@@ -7,21 +7,24 @@
 
 import SwiftUI
 
-struct FullWidthButtonStyle: ButtonStyle {
+public struct FullWidthButtonStyle: ButtonStyle {
     
-    var foregroundColor: Color
-    var backgroundColor: Color
-    var height: CGFloat
-    var cornerRadius: CGFloat
+    public var foregroundColor: Color
+    public var backgroundColor: Color
+    public var height: CGFloat
+    public var cornerRadius: CGFloat
     
-    public init(foregroundColor: Color = .white, backgroundColor: Color = .accentColor, height: CGFloat = 50, cornerRadius: CGFloat = 8.0) {
+    public init(foregroundColor: Color = .white,
+                backgroundColor: Color = .accentColor,
+                height: CGFloat = 50,
+                cornerRadius: CGFloat = 8.0) {
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
         self.height = height
         self.cornerRadius = cornerRadius
     }
     
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body.bold())
             .foregroundColor(foregroundColor)
@@ -32,11 +35,11 @@ struct FullWidthButtonStyle: ButtonStyle {
 }
 
 extension ButtonStyle where Self == FullWidthButtonStyle {
-    static var fullWidthProminent: FullWidthButtonStyle {
+    public static var fullWidthProminent: FullWidthButtonStyle {
         return FullWidthButtonStyle()
     }
     
-    static var fullWidthBordered: FullWidthButtonStyle {
+    public static var fullWidthBordered: FullWidthButtonStyle {
         return FullWidthButtonStyle(foregroundColor: .accentColor, backgroundColor: .init(uiColor: .secondarySystemFill))
     }
 }
