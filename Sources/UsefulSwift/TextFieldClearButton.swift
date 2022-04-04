@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct TextFieldClearButton: ViewModifier {
+public struct TextFieldClearButton: ViewModifier {
     
     @Binding var text: String
     
-    func body(content: Content) -> some View {
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    public func body(content: Content) -> some View {
         content
             .overlay {
                 if !text.isEmpty {
@@ -31,7 +35,7 @@ struct TextFieldClearButton: ViewModifier {
 
 extension View {
     @ViewBuilder
-    func clearableTextField(_ bool: Bool = true, text: Binding<String>) -> some View {
+    public func clearableTextField(_ bool: Bool = true, text: Binding<String>) -> some View {
         if bool {
             modifier(TextFieldClearButton(text: text))
         } else {
