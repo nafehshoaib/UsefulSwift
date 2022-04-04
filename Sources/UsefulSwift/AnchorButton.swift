@@ -9,9 +9,12 @@ import SwiftUI
 
 public struct AnchorButton<Label: View>: ViewModifier {
     
+    @Binding var isEnabled: Bool
+    
     var button: Button<Label>
     
-    public init(@ViewBuilder button: () -> Button<Label>) {
+    public init(isEnabled: Binding<Bool> = .constant(true), @ViewBuilder button: () -> Button<Label>) {
+        self._isEnabled = isEnabled
         self.button = button()
     }
     
@@ -21,6 +24,7 @@ public struct AnchorButton<Label: View>: ViewModifier {
                 .frame(maxWidth: .infinity)
             button
                 .buttonStyle(.fullWidthProminent)
+                .disabled(!isEnabled)
                 .padding(20)
                 .background(Material.bar)
         }
