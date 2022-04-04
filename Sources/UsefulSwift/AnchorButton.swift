@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct AnchorButton<Label: View>: ViewModifier {
+public struct AnchorButton<Label: View>: ViewModifier {
     
     var button: Button<Label>
     
-    fileprivate init(@ViewBuilder button: () -> Button<Label>) {
+    public init(@ViewBuilder button: () -> Button<Label>) {
         self.button = button()
     }
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         ZStack(alignment: .init(horizontal: .center, vertical: .bottom)) {
             content
                 .frame(maxWidth: .infinity)
@@ -29,7 +29,7 @@ struct AnchorButton<Label: View>: ViewModifier {
 
 extension ScrollView {
     @ViewBuilder
-    func anchorButton<Label: View>(includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
+    public func anchorButton<Label: View>(includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
         if includeSpacer {
             ScrollView<HStack<TupleView<(Content, Spacer)>>> {
                 HStack {
