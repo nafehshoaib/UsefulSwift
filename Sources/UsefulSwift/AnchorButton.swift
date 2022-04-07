@@ -7,33 +7,55 @@
 
 import SwiftUI
 
-public struct AnchorButton<Label: View>: ViewModifier {
+public struct AnchorButton<Label>: ViewModifier where Label: View {
+    var items: [AnchorItem<Label>]
     
-    @Binding var isEnabled: Bool
+    public init(@ArrayBuilder<AnchorItem<Label>> items: () -> [AnchorItem<Label>]) {
+        self.items = items()
+    }
     
-    var button: Button<Label>
-    
-    public init(isEnabled: Binding<Bool> = .constant(true), @ViewBuilder button: () -> Button<Label>) {
-        self._isEnabled = isEnabled
-        self.button = button()
+    public init(isEnabled: Binding<Bool> = .constant(true),
+                @ViewBuilder button: () -> Button<Label>) {
+        self.init {
+            AnchorItem(isEnabled: isEnabled) {
+                button()
+            }
+        }
     }
     
     public func body(content: Content) -> some View {
         ZStack(alignment: .init(horizontal: .center, vertical: .bottom)) {
             content
                 .frame(maxWidth: .infinity)
-            button
-                .buttonStyle(.fullWidthProminent)
-                .disabled(!isEnabled)
-                .padding(20)
-                .background(Material.bar)
+            VStack(spacing: 8.0) {
+                ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                    item.button
+                        .buttonStyle(item.style)
+                        .disabled(!item.isEnabled)
+                }
+            }
+            .padding(20)
+            .background(Material.bar)
         }
+    }
+}
+
+public struct AnchorItem<Label> where Label: View {
+    @Binding var isEnabled: Bool
+    
+    var style: FullWidthButtonStyle
+    var button: Button<Label>
+    
+    public init(isEnabled: Binding<Bool> = .constant(true), style: FullWidthButtonStyle = .fullWidthProminent, @ViewBuilder button: () -> Button<Label>) {
+        self._isEnabled = isEnabled
+        self.style = style
+        self.button = button()
     }
 }
 
 extension ScrollView {
     @ViewBuilder
-    public func anchorButton<Label: View>(includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
+    public func anchorButton<Label: View>(isEnabled: Binding<Bool> = .constant(true), includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
         if includeSpacer {
             ScrollView<HStack<TupleView<(Content, Spacer)>>> {
                 HStack {
@@ -41,9 +63,25 @@ extension ScrollView {
                     Spacer()
                 }
             }
-            .modifier(AnchorButton(button: button))
+            .modifier(AnchorButton(isEnabled: isEnabled, button: button))
         } else {
-            modifier(AnchorButton(button: button))
+            modifier(AnchorButton(isEnabled: isEnabled, button: button))
+        }
+    }
+    
+    @ViewBuilder
+    public func anchorButton<Label: View>(includeSpacer: Bool = false,
+                                          @ArrayBuilder<AnchorItem<Label>> items: () -> [AnchorItem<Label>]) -> some View {
+        if includeSpacer {
+            ScrollView<HStack<TupleView<(Content, Spacer)>>> {
+                HStack {
+                    content
+                    Spacer()
+                }
+            }
+            .modifier(AnchorButton(items: items))
+        } else {
+            modifier(AnchorButton(items: items))
         }
     }
 }
@@ -64,7 +102,7 @@ struct AnchorButton_Previews: PreviewProvider {
                     } label: {
                         EmptyView()
                     }
-
+                    
                 }
                 .anchorButton {
                     Button("Next") {
