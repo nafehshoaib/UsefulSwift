@@ -14,7 +14,7 @@ public struct AnchorButton<Label>: ViewModifier where Label: View {
         self.items = items()
     }
     
-    public init(isEnabled: Binding<Bool> = .constant(true),
+    public init(isEnabled: Bool = true,
                 @ViewBuilder button: () -> Button<Label>) {
         self.init {
             AnchorItem(isEnabled: isEnabled) {
@@ -41,13 +41,13 @@ public struct AnchorButton<Label>: ViewModifier where Label: View {
 }
 
 public struct AnchorItem<Label> where Label: View {
-    @Binding var isEnabled: Bool
+    var isEnabled: Bool
     
     var style: FullWidthButtonStyle
     var button: Button<Label>
     
-    public init(isEnabled: Binding<Bool> = .constant(true), style: FullWidthButtonStyle = .fullWidthProminent, @ViewBuilder button: () -> Button<Label>) {
-        self._isEnabled = isEnabled
+    public init(isEnabled: Bool = true, style: FullWidthButtonStyle = .fullWidthProminent, @ViewBuilder button: () -> Button<Label>) {
+        self.isEnabled = isEnabled
         self.style = style
         self.button = button()
     }
@@ -55,7 +55,7 @@ public struct AnchorItem<Label> where Label: View {
 
 extension ScrollView {
     @ViewBuilder
-    public func anchorButton<Label: View>(isEnabled: Binding<Bool> = .constant(true), includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
+    public func anchorButton<Label: View>(isEnabled: Bool = true, includeSpacer: Bool = false, @ViewBuilder button: () -> Button<Label>) -> some View {
         if includeSpacer {
             ScrollView<HStack<TupleView<(Content, Spacer)>>> {
                 HStack {
