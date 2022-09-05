@@ -17,7 +17,7 @@ public struct AnyEncodable: Encodable {
         encodeAction = wrapped.encode
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         try encodeAction(encoder)
     }
 }
