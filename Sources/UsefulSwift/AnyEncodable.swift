@@ -9,7 +9,7 @@ import Foundation
 
 /// Type-erased Encodable struct
 /// Swift Forums source: https://forums.swift.org/t/how-to-encode-objects-of-unknown-type/12253
-struct AnyEncodable: Encodable {
+public struct AnyEncodable: Encodable {
     
     private let encodeAction: (Encoder) throws -> Void
     
