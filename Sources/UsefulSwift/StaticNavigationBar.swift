@@ -11,11 +11,15 @@ public struct StaticNavigationBar<Content>: View where Content: View {
     
     var title: String
     var prompt: String?
+    
+    var alignment: VerticalAlignment
+    
     let button: Content
     
-    public init(_ title: String, prompt: String? = nil, @ViewBuilder button: () -> Content) {
+    public init(_ title: String, prompt: String? = nil, alignment: VerticalAlignment = .bottom, @ViewBuilder button: () -> Content) {
         self.title = title
         self.prompt = prompt
+        self.alignment = alignment
         self.button = button()
     }
     
@@ -27,7 +31,7 @@ public struct StaticNavigationBar<Content>: View where Content: View {
                                 value: -proxy.frame(in: .named("card-list")).minY)
             }
             .frame(height: 0)
-            HStack(alignment: .bottom) {
+            HStack(alignment: alignment) {
                 VStack(alignment: .leading, spacing: 5.0) {
                     if let prompt = prompt {
                         Text(prompt.uppercased())
@@ -95,7 +99,7 @@ struct StaticNavigationBar_Previews: PreviewProvider {
             }
         }
         ScrollView {
-            StaticNavigationBar("Wallet") {
+            StaticNavigationBar("Wallet", alignment: .center) {
                 Button {
                     
                 } label: {
