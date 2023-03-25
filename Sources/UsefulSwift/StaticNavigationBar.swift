@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StaticNavigationBar<Content>: View where Content: View {
+public struct StaticNavigationBar<Content>: View where Content: View {
     
     var title: String
     var prompt: String?
@@ -19,7 +19,7 @@ struct StaticNavigationBar<Content>: View where Content: View {
         self.button = button()
     }
     
-    var body: some View {
+    public var body: some View {
         VStack {
             GeometryReader { proxy in
                 Color.clear
@@ -46,10 +46,10 @@ struct StaticNavigationBar<Content>: View where Content: View {
     }
 }
 
-struct NavbarScrollPreference: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
+public struct NavbarScrollPreference: PreferenceKey {
+    public static var defaultValue: CGFloat = .zero
     
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { }
+    public static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { }
 }
 
 public struct StaticNavbarModifier: ViewModifier {
