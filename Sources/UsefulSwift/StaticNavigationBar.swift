@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 public struct StaticNavigationBar<Content>: View where Content: View {
     
     var title: String
@@ -112,3 +113,4 @@ struct StaticNavigationBar_Previews: PreviewProvider {
         }
     }
 }
+#endif

@@ -40,7 +40,7 @@ extension ButtonStyle where Self == FullWidthButtonStyle {
     }
     
     public static var fullWidthBordered: FullWidthButtonStyle {
-        return FullWidthButtonStyle(foregroundColor: .accentColor, backgroundColor: .init(uiColor: .secondarySystemFill))
+        return FullWidthButtonStyle(foregroundColor: .accentColor, backgroundColor: .init(.secondarySystemFill))
     }
 }
 

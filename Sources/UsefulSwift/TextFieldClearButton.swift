@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 public struct TextFieldClearButton: ViewModifier {
     
     @Binding var text: String
@@ -43,3 +44,4 @@ extension View {
         }
     }
 }
+#endif
